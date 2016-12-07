@@ -3,9 +3,9 @@ package spell;
 public class Point {
 
    private static final double EPSILON = 0.00001;
-   
-   public static final Point ZERO = new Point(0,0);
-   public static final Point ONE = new Point(1,1);
+
+   public static final Point ZERO = new Point(0, 0);
+   public static final Point ONE = new Point(1, 1);
 
    public final double x;
    public final double y;
@@ -30,7 +30,7 @@ public class Point {
    public static Point scale(Point a, double scalar) {
       return new Point(a.x * scalar, a.y * scalar);
    }
-   
+
    public static Point scale(Point a, Point b) {
       return new Point(a.x * b.x, a.y * b.y);
    }
@@ -50,7 +50,8 @@ public class Point {
    }
 
    public static boolean approxEqual(Point a, Point b) {
-      return Math.abs(a.x - b.x) - EPSILON < 0 && Math.abs(a.y - b.y) - EPSILON < 0;
+      return Math.abs(a.x - b.x) - EPSILON < 0
+            && Math.abs(a.y - b.y) - EPSILON < 0;
    }
 
    @Override

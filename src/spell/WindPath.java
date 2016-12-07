@@ -10,7 +10,7 @@ public class WindPath extends Path {
 
    @Override
    public Point sample(double t) {
-      return new Point(Math.sin(t * 4 * Math.PI) + (t - 0.5) * 3.5, Math.cos(t * 4 * Math.PI));
+      return new Point(Math.sin(t * 4 * Math.PI) + (t - 0.5) * 3.5, -Math.cos(t * 4 * Math.PI));
    }
 
 }

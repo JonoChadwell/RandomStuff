@@ -10,13 +10,6 @@ public class PathSample {
       this.points = points;
    }
 
-   public PathSample(Path p, int points) {
-      this.points = new Point[points];
-      for (int i = 0; i < points; i++) {
-         this.points[i] = p.sample((double) i / (double) (points - 1));
-      }
-   }
-
    public PathSample(Path p, int points, boolean normalize) {
       this.points = new Point[points];
       for (int i = 0; i < points; i++) {
@@ -40,7 +33,7 @@ public class PathSample {
    public void normalize() {
       recenter(getCentroid());
       rotate(-Math.atan2(points[0].y, points[0].x));
-      rescale();
+      rescale2();
    }
 
    public Point getCentroid() {
@@ -63,30 +56,16 @@ public class PathSample {
       }
    }
 
-   private void rescale() {
-      double minx = Arrays.stream(points).mapToDouble((p) -> p.x).min().getAsDouble();
-      double miny = Arrays.stream(points).mapToDouble((p) -> p.y).min().getAsDouble();
-      double maxx = Arrays.stream(points).mapToDouble((p) -> p.x).max().getAsDouble();
-      double maxy = Arrays.stream(points).mapToDouble((p) -> p.y).max().getAsDouble();
-      for (int i = 0; i < points.length; i++) {
-         points[i] = new Point((points[i].x - minx) / (maxx - minx), (points[i].y - miny) / (maxy - miny));
-      }
-   }
-
-   // preserves aspect ratio and centers
    private void rescale2() {
       double minx = Arrays.stream(points).mapToDouble((p) -> p.x).min().getAsDouble();
       double miny = Arrays.stream(points).mapToDouble((p) -> p.y).min().getAsDouble();
       double maxx = Arrays.stream(points).mapToDouble((p) -> p.x).max().getAsDouble();
       double maxy = Arrays.stream(points).mapToDouble((p) -> p.y).max().getAsDouble();
       double scale = Math.max(maxx - minx, maxy - miny);
+      double addx = (scale - (maxx-minx)) / 2;
+      double addy = (scale - (maxy-miny)) / 2;
       for (int i = 0; i < points.length; i++) {
-         points[i] = new Point((points[i].x - minx) / scale, (points[i].y - miny) / scale);
-      }
-      maxx = Arrays.stream(points).mapToDouble((p) -> p.x).max().getAsDouble();
-      maxy = Arrays.stream(points).mapToDouble((p) -> p.y).max().getAsDouble();
-      for (int i = 0; i < points.length; i++) {
-         points[i] = new Point(points[i].x + (1 - maxx) / 2, points[i].y + (1 - maxy) / 2);
+         points[i] = new Point((points[i].x - minx + addx) / scale, (points[i].y - miny + addy) / scale);
       }
    }
 }

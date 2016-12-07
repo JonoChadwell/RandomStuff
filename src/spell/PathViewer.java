@@ -63,13 +63,13 @@ public class PathViewer {
 
    private static void drawPoint(Graphics g, Point pt, int pointRadius) {
       int x = (int) (pt.x * X_SCALAR) + X_SHIFT - pointRadius;
-      int y = (int) (pt.y * Y_SCALAR) + Y_SHIFT - pointRadius;
-      g.fillOval(x, y, pointRadius * 2, pointRadius * 2);
+      int y = (int) (pt.y * Y_SCALAR) + Y_SHIFT + pointRadius;
+      g.fillOval(x, HEIGHT - y, pointRadius * 2, pointRadius * 2);
    }
 
    public static void main(String[] args) {
       for (Path spell : SpellPathes.SPELLS) {
-         if (spell != SpellPathes.PENTAGRAM) continue;
+         // if (spell != SpellPathes.BARRIER) continue;
          new PathViewer(new PathSample(spell, 800, false));
       }
    }
