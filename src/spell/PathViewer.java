@@ -14,12 +14,13 @@ public class PathViewer {
    private JFrame frame;
    private JPanel panel;
 
-   private static final double X_SCALAR = 276;
-   private static final int X_SHIFT = 12;
-   private static final double Y_SCALAR = 276;
-   private static final int Y_SHIFT = 12;
-   private static final int WIDTH = 300;
-   private static final int HEIGHT = 300;
+   private static final int FULL_SCALAR = 3;
+   private static final double X_SCALAR = 276 * FULL_SCALAR;
+   private static final int X_SHIFT = 12 * FULL_SCALAR;
+   private static final double Y_SCALAR = 276 * FULL_SCALAR;
+   private static final int Y_SHIFT = 12 * FULL_SCALAR;
+   private static final int WIDTH = 300 * FULL_SCALAR;
+   private static final int HEIGHT = 300 * FULL_SCALAR;
 
    @SuppressWarnings("serial")
    public PathViewer(PathSample sample) {
@@ -57,7 +58,7 @@ public class PathViewer {
          float pos = (float) i / (float) sample.getLength();
          g.setColor(new Color(0f, 1 - pos, pos, 0.2f));
          Point pt = sample.getPoint(i);
-         drawPoint(g, pt, (int) (6 * (1 - pos)) + 5);
+         drawPoint(g, pt, (int) (6 * (1 - pos) * FULL_SCALAR) + 5 * FULL_SCALAR);
       }
    }
 

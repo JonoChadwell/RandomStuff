@@ -45,6 +45,28 @@ public class PathBuilder {
       return this;
    }
 
+   public PathBuilder bezier(double... pts) {
+      if (pts.length < 2 || pts.length % 2 == 1) {
+         throw new RuntimeException("Bad arguments");
+      }
+      double startAngle = Math.atan2(pts[1], pts[0]);
+      int len = pts.length;
+      double endAngle;
+      if (len == 2) {
+         endAngle = startAngle;
+      } else {
+         endAngle = Math.atan2(pts[len - 1] - pts[len - 3], pts[len - 2] - pts[len - 4]);
+      }
+      Point[] vals = new Point[len / 2 + 1];
+      vals[0] = new Point(0,0);
+      for (int i = 0; i < len / 2; i++) {
+         vals[i + 1] = Point.rotate(new Point(pts[2 * i], pts[2 * i + 1]), angle - startAngle);
+      }
+      angle += endAngle - startAngle;
+      pathes.add(new BezierPath(vals));
+      return this;
+   }
+
    public Path build() {
       return new CombinedPath(true, pathes.toArray(new Path[0]));
    }
